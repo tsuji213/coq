@@ -43,6 +43,8 @@ Inductive reduction : term -> term -> Prop :=
 
 where "t1 '==>' t2" := (reduction t1 t2).
 
+(* | E_SPE2 : forall t1 t2' t2, t2 ==> t2' -> (term_Alternative t1 t2) ==> term_Alternative t1 t2'*)
+
 Tactic Notation "reduction_cases" tactic(first) ident(c) :=
  first;
  [ Case_aux c "E_TRE"

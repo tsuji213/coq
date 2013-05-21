@@ -75,3 +75,21 @@ subst.
 apply IHhas_Type.
 assumption.
 
+Case "T_SPE".
+inversion H1.
+subst.
+
+SCase "E_SPT". assumption.
+SCase "E_SPF". 
+subst.
+apply T_SUP.
+assumption.
+
+apply T_SPE.
+subst.
+apply IHhas_Type1.
+assumption.
+auto.
+Qed.
+
+Check preservation.

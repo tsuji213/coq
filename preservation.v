@@ -47,3 +47,15 @@ apply IHhas_Type1.
 assumption.
 
 
+Case "T_SUP".
+inversion H0.
+subst.
+
+SCase "E_GOLT". assumption.
+SCase "E_GOLF".
+subst.
+assumption.
+
+apply IHhas_Type.
+auto.
+

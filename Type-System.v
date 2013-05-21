@@ -89,3 +89,21 @@ Case "T_EVI".
 right.
 exists term_Valid_Claim.
 apply E_TRE.
+
+Case "T_UND".
+right.
+exists term_Invalid_Claim.
+apply E_FLS.
+
+Case "T_CON".
+right.
+destruct IHhas_Type1.
+destruct IHhas_Type2.
+destruct H2.
+exists term_Evidence.
+apply E_IFT.
+
+exists term_Invalid_Claim.
+apply E_IFF.
+
+

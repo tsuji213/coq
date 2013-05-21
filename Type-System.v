@@ -59,7 +59,7 @@ Tactic Notation "reduction_cases" tactic(first) ident(c) :=
  | Case_aux c "E_GOL"
  | Case_aux c "E_IF"
  | Case_aux c "E_INS"
- | Case_aux c "E_SPt"
+ | Case_aux c "E_SPT"
  | Case_aux c "E_SPF"
  | Case_aux c "E_SPE"].
 
@@ -181,3 +181,9 @@ auto.
 inversion H0.
 exists (term_Supported x).
 auto.
+
+Case "T_SPE".
+right.
+destruct IHhas_Type1.
+destruct H1.
+

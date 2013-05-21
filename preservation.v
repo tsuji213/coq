@@ -59,3 +59,15 @@ assumption.
 apply IHhas_Type.
 auto.
 
+Case "T_STR".
+inversion H0.
+subst.
+
+SCase "E_STRT". assumption.
+SCase "E_STRF".
+subst.
+assumption.
+
+subst.
+apply IHhas_Type.
+auto.

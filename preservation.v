@@ -51,11 +51,13 @@ Case "T_SUP".
 inversion H0.
 subst.
 
-SCase "E_GOLT". assumption.
+SCase "E_GOLT". 
+auto.
 SCase "E_GOLF".
 subst.
-assumption.
+auto.
 
+subst.
 apply IHhas_Type.
 auto.
 
@@ -68,6 +70,8 @@ SCase "E_STRF".
 subst.
 assumption.
 
+apply T_SUP.
 subst.
 apply IHhas_Type.
-auto.
+assumption.
+

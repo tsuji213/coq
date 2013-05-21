@@ -83,12 +83,12 @@ Inductive has_Type : term -> T -> Prop :=
                             has_Type t2 Ty ->
                             has_Type (term_Intersection t1 t2) Ty
  | T_SUP : forall t Ty, has_Type t Ty ->
-                        has_Type (term_Supported t) T_Bool
+                        has_Type (term_Supported t) Ty
  | T_STR : forall t Ty, has_Type t Ty ->
-                        has_Type (term_Strategy t) T_Bool
+                        has_Type (term_Strategy t) Ty
  | T_SPE : forall t1 t2 Ty, has_Type t1 Ty ->
                             has_Type t2 Ty ->
-                            has_Type (term_Alternative t1 t2) T_Bool.
+                            has_Type (term_Alternative t1 t2) Ty.
 
 Tactic Notation "has_type_cases" tactic(first) ident(c) :=
  first;

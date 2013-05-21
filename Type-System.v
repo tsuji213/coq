@@ -39,6 +39,28 @@ Inductive reduction : term -> term -> Prop :=
 
 where "t1 '==>' t2" := (reduction t1 t2).
 
+Tactic Notation "reduction_cases" tactic(first) ident(c) :=
+ first;
+ [ Case_aux c "E_TRE"
+ | Case_aux c "E_FLS"
+ | Case_aux c "E_IF"
+ | Case_aux c "E_FLS"
+ | Case_aux c "E_FLS"
+ | Case_aux c "E_FLS"
+ | Case_aux c "E_FLS"
+ | Case_aux c "E_FLS"
+ | Case_aux c "E_FLS"
+
+
+
+
+
+
+
+
+
+
+
 Hint Constructors reduction.
 
 Inductive T : Type :=
@@ -102,8 +124,16 @@ destruct IHhas_Type2.
 destruct H2.
 exists term_Evidence.
 apply E_IFT.
-
 exists term_Invalid_Claim.
 apply E_IFF.
 
 
+destruct H2.
+exists (term_Condition x).
+apply E_IF.
+apply H2.
+
+destruct IHhas_Type2.
+inversion H1.
+exists (term_Condition x)...
+auto.

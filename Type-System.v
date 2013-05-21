@@ -186,4 +186,16 @@ Case "T_SPE".
 right.
 destruct IHhas_Type1.
 destruct H1.
+exists term_Valid_Claim.
+auto.
 
+exists (term_Supported t2).
+auto.
+
+inversion H1.
+exists (term_Alternative x t2).
+auto.
+
+Qed.
+
+Check progress.

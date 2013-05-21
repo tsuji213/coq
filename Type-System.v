@@ -1,3 +1,5 @@
+Require Export SfLib.
+
 Inductive term : Type :=
  | term_Valid_Claim   : term
  | term_Invalid_Claim : term
@@ -62,6 +64,19 @@ Inductive has_Type : term -> T -> Prop :=
                             has_Type t2 Ty ->
                             has_Type (term_Alternative t1 t2) Ty.
 
+Tactic Notation "has_type_cases" tactic(first) ident(c) :=
+ first;
+ [ Case_aux c "T_TRE"
+ | Case_aux c "T_FLS"
+ | Case_aux c "T_EVI"
+ | Case_aux c "T_UND"
+ | Case_aux c "T_CON"
+ | Case_aux c "T_INS"
+ | Case_aux c "T_SUP"
+ | Case_aux c "T_STR"
+ | Case_aux c "T_SPE"].
+
+
 Hint Constructors has_Type.
 
 (* ------<<< Theorem progress >>>------ *)
@@ -69,3 +84,8 @@ Hint Constructors has_Type.
 Theorem progress : forall t Ty, has_Type t Ty -> bool_value t \/ exists t', t ==> t'.
 Proof with auto.
 intros.
+has_type_cases (induction H) Case...
+Case "T_EVI".
+right.
+exists term_Valid_Claim.
+apply E_TRE.

@@ -10,3 +10,28 @@ Definition stuck (t:term) : Prop :=
 
 Hint Unfold stuck.
 
+
+Check refl_step_closure.
+Check relation.
+Check reduction.
+
+Definition reductionmany := (refl_step_closure reduction).
+Notation "t1 '==>*' t2" := (reductionmany t1 t2) (at level 40).
+
+
+Corollary soundness_type_system : forall t t' Ty,
+                                    has_Type t Ty ->
+                                    t ==>* t' ->
+                                    ~ (stuck t').
+
+Proof.
+intros t t' T HT P.
+induction P; intros [R S].
+destruct (progress x T HT); auto.
+apply IHP.
+apply (preservation x y T HT H).
+unfold stuck.
+split.
+auto.
+auto.
+Qed.

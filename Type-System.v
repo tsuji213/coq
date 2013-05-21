@@ -43,21 +43,17 @@ Tactic Notation "reduction_cases" tactic(first) ident(c) :=
  first;
  [ Case_aux c "E_TRE"
  | Case_aux c "E_FLS"
+ | Case_aux c "E_IFT"
+ | Case_aux c "E_IFF"
+ | Case_aux c "E_INTT"
+ | Case_aux c "E_INTF"
+ | Case_aux c "E_STR"
+ | Case_aux c "E_GOL"
  | Case_aux c "E_IF"
- | Case_aux c "E_FLS"
- | Case_aux c "E_FLS"
- | Case_aux c "E_FLS"
- | Case_aux c "E_FLS"
- | Case_aux c "E_FLS"
- | Case_aux c "E_FLS"
-
-
-
-
-
-
-
-
+ | Case_aux c "E_INS"
+ | Case_aux c "E_SPt"
+ | Case_aux c "E_SPF"
+ | Case_aux c "E_SPE"].
 
 
 
@@ -119,21 +115,17 @@ apply E_FLS.
 
 Case "T_CON".
 right.
-destruct IHhas_Type1.
+(*destruct IHhas_Type1.*)
 destruct IHhas_Type2.
-destruct H2.
+destruct H1.
 exists term_Evidence.
 apply E_IFT.
 exists term_Invalid_Claim.
 apply E_IFF.
 
 
-destruct H2.
+destruct H1.
 exists (term_Condition x).
 apply E_IF.
-apply H2.
-
-destruct IHhas_Type2.
-inversion H1.
-exists (term_Condition x)...
 auto.
+

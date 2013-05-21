@@ -29,8 +29,12 @@ Inductive reduction : term -> term -> Prop :=
  | E_IFF : (term_Condition term_Invalid_Claim) ==> term_Invalid_Claim
  | E_INTT : forall t, (term_Intersection term_Valid_Claim t) ==> t
  | E_INTF : forall t, (term_Intersection term_Invalid_Claim t) ==> term_Invalid_Claim
- | E_STR : forall t, (term_Strategy t) ==> term_Supported t
- | E_GOL : forall t t', t ==> t' -> (term_Strategy t) ==> term_Supported t
+ | E_STRT : (term_Strategy term_Valid_Claim) ==> term_Valid_Claim
+ | E_STRF : (term_Strategy term_Invalid_Claim) ==> term_Invalid_Claim
+ | E_STR : forall t t', t ==> t' -> (term_Strategy t) ==> term_Supported t'
+ | E_GOLT : (term_Supported term_Valid_Claim) ==> term_Valid_Claim
+ | E_GOLF : (term_Supported term_Invalid_Claim) ==> term_Invalid_Claim
+ | E_GOL : forall t t', t ==> t' -> (term_Supported t) ==> t'
  | E_IF : forall t t', t ==> t' -> (term_Condition t) ==> term_Condition t'
  | E_INS : forall t1 t1' t2, t1 ==> t1' -> (term_Intersection t1 t2) ==> term_Intersection t1' t2
  | E_SPT : forall t, term_Alternative term_Valid_Claim t ==> term_Valid_Claim
@@ -48,6 +52,10 @@ Tactic Notation "reduction_cases" tactic(first) ident(c) :=
  | Case_aux c "E_INTT"
  | Case_aux c "E_INTF"
  | Case_aux c "E_STR"
+ | Case_aux c "E_STRT"
+ | Case_aux c "E_STRF"
+ | Case_aux c "E_GOLT"
+ | Case_aux c "E_GOLF"
  | Case_aux c "E_GOL"
  | Case_aux c "E_IF"
  | Case_aux c "E_INS"
@@ -129,3 +137,47 @@ exists (term_Condition x).
 apply E_IF.
 auto.
 
+Case "T_INS".
+right.
+destruct IHhas_Type1.
+destruct H1.
+SCase "T_INTT".
+exists t2.
+auto.
+
+SCase "T_INTF".
+exists term_Invalid_Claim.
+auto.
+
+destruct H1.
+exists (term_Intersection x t2).
+auto.
+
+Case "T_SUP".
+right.
+destruct IHhas_Type.
+destruct H0.
+
+exists term_Valid_Claim.
+auto.
+
+exists term_Invalid_Claim.
+auto.
+
+destruct H0.
+exists x.
+auto.
+
+Case "T_STR".
+right.
+destruct IHhas_Type.
+destruct H0.
+exists term_Valid_Claim.
+auto.
+
+exists term_Invalid_Claim.
+auto.
+
+inversion H0.
+exists (term_Supported x).
+auto.

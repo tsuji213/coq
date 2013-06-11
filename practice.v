@@ -1,6 +1,7 @@
 Require Import SfLib.
 Require Import Logic.
 Require Import Basics.
+Require Import Datatypes.
 
 Inductive id : Type :=
   Id : nat -> id.
@@ -45,9 +46,21 @@ Tactic Notation "tm_cases" tactic(first) ident(c) :=
   [ Case_aux c "tm_var" | Case_aux c "tm_app"
   | Case_aux c "tm_abs" | Case_aux c "tm_true"
   | Case_aux c "tm_false" | Case_aux c "tm_if" ].
+(*
+Inductive option (A:Type) : Type :=
+  | Some : A -> option A
+  | None : option A.
 
+Implicit Arguments None [A].
+
+Definition option_map (A B:Type) (f:A->B) o :=
+  match o with
+    | Some a => Some (f a)
+    | None => None
+  end.
+*)
 Definition context := partial_map ty.
-
+(*
 Module Context.
 
 Definition partial_map (A:Type) := id -> option A.
@@ -71,12 +84,12 @@ Proof.
 Qed.
 
 End Context.
-
+*)
 
 
 Inductive has_type : context -> tm -> ty -> Prop :=
-  | T_Var : forall Γ x T,
-      Γ x = Some T ->
+  | T_Var : forall (Γ:context) (x: id) (T : ty),
+      extend Γ x T = Some T ->
       has_type Γ (tm_var x) T
   | T_Abs : forall Γ x T11 T12 t12,
       has_type (extend Γ x T11) t12 T12 ->
